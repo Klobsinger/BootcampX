@@ -16,10 +16,10 @@ FROM teachers
 JOIN assistance_requests ON teacher_id = teachers.id
 JOIN students ON student_id = students.id
 JOIN cohorts ON cohort_id = cohorts.id
-WHERE cohorts.name LIKE '%${cohortSelect}%'
+WHERE cohorts.name LIKE $1
 GROUP BY teachers.name, cohorts.name
 ORDER BY teacher;
-`)
+`,['%' + cohortSelect + '%'])
 .then(res => {
   console.log('connected')
   res.rows.forEach(row => {
